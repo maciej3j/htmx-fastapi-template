@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIR-PDF-Helper</title>
+    <title>BSH | PDF Helper</title>
     <link href="{{ url_for('static', path='css/output.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', path='js/htmx.min.js') }}"></script>
     <script src="{{ url_for('static', path='js/alpine.min.js') }}" defer></script>
 </head>
-<body class="bg-custom-powder-light font-sans antialiased text-custom-blue">
-    <nav class="bg-white border-b border-custom-powder shadow-sm py-4">
-        <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
-            <span class="text-3xl font-dancing-script text-custom-red font-bold">SIR-PDF-Helper</span>
-            <span class="text-xs uppercase tracking-widest text-custom-blue-light font-semibold">Wersja 2.0</span>
+<body class="bg-bsh-orange font-sans antialiased min-h-screen">
+    <nav class="bg-bsh-black py-4 shadow-xl">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-white font-black text-2xl tracking-tighter ">B/S/H/</span>
+                <span class="text-bsh-orange font-light text-xl">Digital Factory</span>
+            </div>
+            <div class="text-gray-400 text-xs font-mono">INTERNAL TOOL v0.0.1</div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto py-12 px-4">
+    <main class="max-w-4xl mx-auto py-16 px-6">
         {% block content %}{% endblock %}
     </main>
 </body>
