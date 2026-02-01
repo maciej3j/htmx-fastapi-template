@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-xl border border-custom-powder overflow-hidden" 
+     x-data="{ excelReady: false, pdfReady: false, loading: false }">
+    
+    <div class="bg-custom-blue p-6">
+        <h2 class="text-xl font-semibold text-custom-powder-light">Panel Przetwarzania Dokumentów</h2>
+        <p class="text-custom-blue-light text-sm italic">Wgraj pliki, aby rozpocząć analizę i edycję PDF.</p>
+    </div>
+
+    <form hx-post="/analyze" 
+          hx-encoding="multipart/form-data" 
+          hx-target="#action-area" 
+          @submit="loading = true"
+          class="p-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+            <div class="group">
+                <label class="block text-sm font-bold text-custom-blue mb-2 ml-1 uppercase tracking-tight">Dane z Excela</label>
+                <div class="relative h-40 border-2 border-dashed border-custom-powder rounded-xl flex flex-col items-center justify-center transition-all group-hover:border-custom-red group-hover:bg-custom-powder-light/30">
+                    <input type="file" name="excel_file" accept=".xlsx" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                           @change="excelReady = $event.target.files.length > 0">
+                    
+                    <div class="text-center space-y-2">
+                        <svg class="mx-auto h-10 w-10 text-custom-blue-light group-hover:text-custom-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <p class="text-sm font-medium text-custom-blue" x-text="excelReady ? 'Arkusz wybrany ✅' : 'Wybierz plik .xlsx'"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">
+                <label class="block text-sm font-bold text-custom-blue mb-2 ml-1 uppercase tracking-tight">Wzór PDF</label>
+                <div class="relative h-40 border-2 border-dashed border-custom-powder rounded-xl flex flex-col items-center justify-center transition-all group-hover:border-custom-red group-hover:bg-custom-powder-light/30">
+                    <input type="file" name="pdf_file" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                           @change="pdfReady = $event.target.files.length > 0">
+                    
+                    <div class="text-center space-y-2">
+                        <svg class="mx-auto h-10 w-10 text-custom-blue-light group-hover:text-custom-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        <p class="text-sm font-medium text-custom-blue" x-text="pdfReady ? 'PDF wybrany ✅' : 'Wybierz plik .pdf'"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="action-area" class="flex justify-center">
+            <button type="submit" 
+                    class="btn-default w-full md:w-2/3 py-4 text-lg shadow-lg hover:shadow-custom-red/20 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                    :disabled="!excelReady || !pdfReady || loading">
+                <span x-show="!loading">Wczytaj i analizuj</span>
+                <span x-show="loading" class="flex items-center justify-center">
+                    <svg class="animate-spin h-5 w-5 mr-3 border-2 border-custom-powder-light border-t-transparent rounded-full" viewBox="0 0 24 24"></svg>
+                    Przetwarzanie danych...
+                </span>
+            </button>
+        </div>
+    </form>
+    
+    <div class="bg-custom-powder-light/50 p-4 text-center border-t border-custom-powder">
+        <p class="text-[10px] text-custom-blue-light uppercase tracking-widest font-bold">Bezpieczne przetwarzanie lokalne</p>
+    </div>
+</div>
+{% endblock %}
